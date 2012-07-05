@@ -5,6 +5,8 @@
 // - 19/06/2009 - some new implementations, added Opera support
 // - 11/05/2009 - first sketch
 //
+// - 05/07/2012 - Bug fix by The TalentBox Development Team: add all stylesheets
+//
 // Printing plug-in for jQuery, evolution of jPrintArea: http://plugins.jquery.com/project/jPrintArea
 // requires jQuery 1.3.x
 //
@@ -36,20 +38,10 @@
             var doc = $iframe[0].contentWindow.document;
         }
         
-        if (opt.importCSS)
-        {
-            if ($("link[media=print]").length > 0) 
-            {
-                $("link[media=print]").each( function() {
-                    doc.write("<link type='text/css' rel='stylesheet' href='" + $(this).attr("href") + "' media='print' />");
-                });
-            }
-            else 
-            {
-                $("link").each( function() {
-                    doc.write("<link type='text/css' rel='stylesheet' href='" + $(this).attr("href") + "' />");
-                });
-            }
+        if (opt.importCSS) {
+          $('link[rel="stylesheet"]').each( function() {
+            doc.write("<link type='text/css' rel='stylesheet' href='" + $(this).attr("href") + "' media='" + $(this).attr("media") + "' />");
+          });
         }
         
         if (opt.printContainer) { doc.write($element.outer()); }
