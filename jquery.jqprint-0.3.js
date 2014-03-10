@@ -7,7 +7,7 @@
 //
 // - 05/07/2012 - Bug fix by The TalentBox Development Team: add all stylesheets
 // - 08/03/2014 - Bug fix by The TalentBox Development Team: remove uneeded 'outer' method, use execCommand for better print support
-// - 10/03/2014 - Bug fix by The TalentBox Development Team: Firefox does not support "print" in execCommand...
+// - 10/03/2014 - Bug fix by The TalentBox Development Team: Use execCommand only in IE
 //
 // Printing plug-in for jQuery, evolution of jPrintArea: http://plugins.jquery.com/project/jPrintArea
 // requires jQuery 1.3.x
@@ -56,10 +56,10 @@
           if (opt.operaSupport && $.browser.opera) {
             tab.print();
             tab.close();
-          } else if ($.browser.firefox) {
-            $iframe[0].contentWindow.print();
-          } else {
+          } else if ($.browser.msie) {
             doc.execCommand('print', false, null);
+          } else {
+            $iframe[0].contentWindow.print();
           }
         }, 1000);
     }
